@@ -1,100 +1,76 @@
-#include<iostream>
-#include <algorithm>
-#include<vector>
-#include<string.h>
-#include <stack>
-
+#include <iostream>
 using namespace std;
 
-string a[100];
+int main() {
+	int test_case, i, j, T = 10, len, n;
+	 int pos1, pos2, max, cnt;
+	 char word[100][100];
+	 bool flag;
 
-bool horTest(int l){
-	bool flag;
-	int mid = l / 2;
-	int k, s;
-	for(int y = 0; y < 100; y++){
-		flag = 0;
-		for(int x = 0; x <= 100 - l; x++){
-			stack<char> st;
-			flag = 0;
-			for(k = 0; k < mid; k++){
-				st.push(a[y][x + k]);
-			}
-			s = x + mid;
-			if(l % 2 == 1){
-				s++;
-			}
-			for(k = 0; k < mid; k++){
-				if(st.top() != a[y][s + k]){
-					flag = 1;
-					break;
-				}
-				st.pop();
-			}
-			if(flag == 0){
-				return true;
-			} 
-		}
-	}
-	return false;
-}
-bool verTest(int l){
-	bool flag;
-	int mid = l / 2;
-	int k, s;
-	
-	for(int x = 0; x < 100; x++){
-		flag = 0;
-		for(int y = 0; y <= 100 - l; y++){
-			stack<char> st;
-			flag = 0;
-			for(k = 0; k < mid; k++){
-				st.push(a[y + k][x]);
-			}
-			s = y + mid;
-			if(l % 2 == 1){
-				s++;
-			}
-			for(k = 0; k < mid; k++){
-				if(st.top() != a[s + k][x]){
-					flag = 1;
-					break;
-				}
-				st.pop();
-			}
-			if(flag == 0){
-				return true;
-			}
-		}
-	}
-	return false;
-}
-int main(){
-	int test_case;
-	int T = 10;
-	int ret[100];
-	int n;
-	
-	for(test_case = 1; test_case <= T; ++test_case){
-		int len = 1;
+	for(test_case = 1; test_case <= T; test_case++) {
 		cin >> n;
-		for(int i = 0; i < 100; i++){
-			cin >> a[i];
-		}
-		for(int i = 3; i < 100; i++){
-			if(horTest(i) || verTest(i)){
-				len = max(i, len);
+		for (i = 0; i < 100; i++) {
+			for (j = 0; j < 100; j++) {
+				cin >> word[i][j];
 			}
 		}
-		ret[test_case - 1] = len;
-		for(int i = 0; i < 100; i ++){
-			a[i] = '\n';
+		cnt = 0;
+		for (len = 3; len <= 100; len++) {
+			//가로
+			flag = 0;
+			for (i = 0; i < 100; i++) {
+				for (j = 0; j <= 100 - len; j++) {
+					pos2 = j + len - 1;
+					if (word[i][j] == word[i][pos2]) {
+						flag = 0;
+						pos1 = j;
+						for (; pos1 < pos2; pos1++) {
+							if (word[i][pos1] != word[i][pos2]) {
+								flag = 1;
+								break;
+							}
+							pos2--;
+						}
+						if (!flag) {
+							max = len;
+							break;
+						}
+					}
+				}
+				if (!flag) {
+					break;
+				}
+			}
+			if (flag) {
+				//세로
+				for (j = 0; j < 100; j++) {
+					for (i = 0; i <= 100 - len; i++) {
+						pos2 = i + len - 1;
+						if (word[i][j] == word[pos2][j]) {
+							flag = 0;
+							pos1 = i;
+							for (; pos1 < pos2; pos1++) {
+								if (word[pos1][j] != word[pos2][j]) {
+									flag = 1;
+									break;
+								}
+								pos2--;
+							}
+							if (!flag) {
+								max = len;
+								break;
+							}
+						}
+					}
+					if (!flag) {
+						break;
+					}
+				}
+			}
+
 		}
+
+		cout << "#" << test_case << " " << max << "\n";
 	}
-	
-	for(test_case = 1; test_case <= T; test_case++){
-		cout << "#" << test_case << " " << ret[test_case - 1] <<"\n";
-	}
-	
 	return 0;
 }
