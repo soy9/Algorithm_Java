@@ -1,32 +1,40 @@
-#include<iostream>
-#include <algorithm>
-#include<vector>
-#include<string.h>
-
+#include <iostream>
 using namespace std;
 
-int main(){
-	int test_case, t;
-	int T = 10;
-	int ret[10];
-	int cnt = 0;
-	
-	for(test_case = 1; test_case <= T; ++test_case){
-        string str, stc;
-		int pos = 0;
-		cin >> t;
-		cin >> str;
-		cin >> stc;
-		cnt = 0;		
-		while(stc.find(str, pos) != string::npos){
-			cnt++;
-			pos = stc.find(str, pos) + str.size(); 
+int main() {
+	 int test_case, i, j,  T = 10, n, len;
+	 char sen[1000];
+	 char word[10];
+	 int cnt;
+	 bool flag = 0;
+
+	for (test_case = 1; test_case <= T; test_case++) {
+		cin >> n;
+		cin >> word;
+		cin >> sen;
+		
+		for (len = 0; word[len] != '\0'; len++){
 		}
-		ret[test_case - 1] = cnt;
+		i = 0;
+		cnt = 0;
+		while (sen[i] != '\0') {
+			flag = 0;
+			if (sen[i] == word[0]) {
+				for (j = 0; j < len; j++) {
+					if (sen[i + j] != word[j]) {
+						flag = 1;
+						break;
+					}
+				}
+				if (!flag) {
+					cnt++;
+					i = i + len - 1;
+				}
+			} 
+			i++;
+		}
+
+		cout << "#" << n << " " << cnt << "\n";
 	}
-	for(test_case = 1; test_case <= 10; test_case++){
-		cout << "#" << test_case << " " << ret[test_case - 1] <<"\n";
-	}
-	
 	return 0;
 }
