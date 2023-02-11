@@ -72,7 +72,8 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
 		A = Integer.parseInt(st.nextToken()); // 상민이 걸리는 시간
 		B = Integer.parseInt(st.nextToken()); // 지수가 걸리는 시간
@@ -99,15 +100,18 @@ public class Main {
 
 		System.out.println(queueB.size());
 		while (iterB.hasNext()) {
-			System.out.print(iterB.next());
-			System.out.print(" ");
+			sb.append(iterB.next());
+			sb.append(" ");
 		}
-		System.out.println();
+		System.out.println(sb.toString());
+		sb.setLength(0);
+
 		System.out.println(queueR.size());
 		while (iterR.hasNext()) {
-			System.out.print(iterR.next());
-			System.out.print(" ");
+			sb.append(iterR.next());
+			sb.append(" ");
 		}
+		System.out.println(sb.toString());
 
 	}
 
