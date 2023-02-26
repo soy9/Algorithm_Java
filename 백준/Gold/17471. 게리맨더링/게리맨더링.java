@@ -41,14 +41,18 @@ public class Main {
 
 		if (r == 0) {
 			int groupA = -1;
+            int groupB = -1;
 			// 두 그룹이 연결되어있는 지 확인
+            
+            //A그룹 연결확인
 			for (int i = 1; i <= N; i++) {
 				if (!visited[i]) {
 					groupA = checkConnected(i, n - cnt, false);
 					break;
 				}
 			}
-			int groupB = -1;
+			
+            //A그룹이 연결되어있으면 -> B그룹 연결확인
 			if (groupA != -1) {
 				for (int i = 1; i <= N; i++) {
 					if (visited[i]) {
@@ -56,12 +60,13 @@ public class Main {
 						break;
 					}
 				}
+                
+                // 둘다 연결되어 있다면 인구수 차이 확인
 				if (groupB != -1) {
 					minDiff = (minDiff < Math.abs(groupA - groupB)) ? minDiff : Math.abs(groupA - groupB);
 				}
 			}
 
-			// 둘다 연결되어 있다면 인구수 차이 확인
 			return;
 		}
 		for (int i = start; i <= n; i++) {
