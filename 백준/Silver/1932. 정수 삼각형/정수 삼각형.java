@@ -11,7 +11,6 @@ public class Main {
 		StringTokenizer st;
 		int N = Integer.parseInt(br.readLine());
 		int[][] map = new int[N][N];
-		int[][] dp = new int[N][N];
 
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -21,14 +20,13 @@ public class Main {
 			}
 		}
 
-		dp[N - 1] = Arrays.copyOf(map[N - 1], N);
 		for (int y = N - 2; y >= 0; y--) {
 			for (int x = 0; x <= y; x++) {
-				dp[y][x] = map[y][x] + Math.max(dp[y + 1][x], dp[y + 1][x + 1]);
+				map[y][x] = map[y][x] + Math.max(map[y + 1][x], map[y + 1][x + 1]);
 			}
 		}
 
-		System.out.println(dp[0][0]);
+		System.out.println(map[0][0]);
 
 	}
 }
