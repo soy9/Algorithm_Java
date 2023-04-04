@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
@@ -25,21 +24,25 @@ public class Main {
 			student[from - 1].add(to - 1);
 			in[to - 1]++;
 		}
-		M = N;
+        // input end
 
-		while (N > 0) {
-			for (int i = 0; i < M; i++) {
-				if (in[i] == 0 && !visited[i]) {
-					visited[i] = true;
-					sb.append((i + 1) + " ");
-					for (Integer next : student[i]) {
-						in[next]--;
-					}
-					N--;
-				}
+		Queue<Integer> q = new LinkedList<Integer>();
+		for (int i = 0; i < N; i++) {
+			if (in[i] == 0) {
+				q.add(i);
 			}
 		}
 
+		while (!q.isEmpty()) {
+			int idx = q.poll();
+			sb.append((idx + 1) + " ");
+			for (Integer next : student[idx]) {
+				in[next]--;
+				if (in[next] == 0) {
+					q.add(next);
+				}
+			}
+		}
 		System.out.println(sb);
 
 	}
