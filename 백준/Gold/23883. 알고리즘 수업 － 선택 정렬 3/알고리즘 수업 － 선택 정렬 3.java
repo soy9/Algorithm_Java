@@ -20,34 +20,24 @@ public class Main {
         }
 
         // selection sort
-        int times = 0;
-        int i = N;
+        int times = 0, i = N;
         for(Integer key : idxMap.keySet()) {
-            
-            if(arr[i] == key) {
-                i--;
-                continue;
-            }
+            if(arr[i] != key) {
+                if(++times == K) {
+                    System.out.println(arr[i] + " " + arr[idxMap.get(key)]);
+                    break;
+                }
+                int idx = idxMap.get(key);
+                arr[idx] = arr[i];
 
-            int idx = idxMap.get(key);
-            int temp = arr[i];
-            arr[i] = arr[idx];
-            arr[idx] = temp;
+                idxMap.replace(arr[idx], idx);
 
-            idxMap.replace(key, i);
-            idxMap.replace(arr[idx], idx);
-
-            if(++times == K) {
-                System.out.println(arr[idx] + " " + arr[i]);
-                break;
             }
             i--;
-
         }
 
         if(times < K) {
             System.out.println("-1");
         }
-
     }
 }
