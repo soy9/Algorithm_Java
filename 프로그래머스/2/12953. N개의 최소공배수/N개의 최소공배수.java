@@ -1,21 +1,11 @@
 import java.util.*;
 
 class Solution {
-    public int solution(int[] arr) {
-        int answer = 1;
-        int firstIdx = 0;
-        Arrays.sort(arr);
+    public int solution(int[] arr) {    
+        int answer = arr[0];
         
-        for(int i = 0; i < arr.length; i++) {
-            if(arr[i] > 1) {
-                answer = arr[i];
-                firstIdx = i + 1;
-                break;
-            }
-        }
-             
-        for(int i = firstIdx; i < arr.length; i++) {
-            if(answer == arr[i]){
+        for(int i = 1; i < arr.length; i++) {
+            if(answer == arr[i] || arr[i] == 1){
                 continue;
             }
             answer = findLCM(Math.min(answer, arr[i]), Math.max(answer, arr[i]));
