@@ -3,16 +3,18 @@ import java.util.*;
 class Solution {
     public int solution(int[] arr) {
         int answer = 1;
+        int firstIdx = 0;
         Arrays.sort(arr);
         
         for(int i = 0; i < arr.length; i++) {
             if(arr[i] > 1) {
                 answer = arr[i];
+                firstIdx = i + 1;
                 break;
             }
         }
              
-        for(int i = 1; i < arr.length; i++) {
+        for(int i = firstIdx; i < arr.length; i++) {
             if(answer == arr[i]){
                 continue;
             }
