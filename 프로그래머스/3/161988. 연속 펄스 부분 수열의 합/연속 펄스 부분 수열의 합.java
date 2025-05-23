@@ -1,40 +1,35 @@
 class Solution {
-    long findMax(int n, int[] sequence){
-        long[] psum = new long[sequence.length + 1];
-        long answer = 0;
+    public long solution(int[] sequence) {
+        long answer = (sequence[0] > - sequence[0]) ? sequence[0] : - sequence[0];
         
-        int maxIdx = 0;
-        int minusLastIdx = 0;
+        long[][] psum = new long[2][sequence.length];
+        int[] minIdx = new int[2]; 
+        int[] maxIdx = new int[2];
         
-        psum[0] = 0;
-        for(int i = 1; i <= sequence.length; i++){
-            if(i % 2 == n) {
-                psum[i] = psum[i - 1] + (sequence[i - 1] * (-1));
+        psum[0][0] = sequence[0];
+        psum[1][0] = - sequence[0];
+        
+        for(int i = 1; i < sequence.length; i++) {
+            if(i % 2 == 1) {
+                psum[0][i] = psum[0][i - 1] - sequence[i];
+                psum[1][i] = psum[1][i - 1] + sequence[i];
             } else {
-                psum[i] = psum[i - 1] + sequence[i - 1];
+                psum[0][i] = psum[0][i - 1] + sequence[i];
+                psum[1][i] = psum[1][i - 1] - sequence[i];
             }
             
-            if(psum[maxIdx] < psum[i]) {
-                maxIdx = i;
-                answer = psum[maxIdx] - psum[minusLastIdx];
-            }
-            
-            if(psum[i] <= psum[minusLastIdx]) {
-                minusLastIdx = i;
+            for(int j = 0; j <= 1; j++) {
+                minIdx[j] = (psum[j][minIdx[j]] <= psum[j][i]) ? minIdx[j] : i;
+                maxIdx[j] = (psum[j][maxIdx[j]] > psum[j][i]) ? maxIdx[j] : i;
+                
+                if(maxIdx[j] > minIdx[j]) {
+                    long temp = psum[j][maxIdx[j]] - psum[j][minIdx[j]];
+                    temp = (temp > psum[j][maxIdx[j]]) ? temp : psum[j][maxIdx[j]];
+                    answer = (answer > temp) ? answer : temp;
+                }
             }
         }
         
         return answer;
-    }
-    
-    
-    public long solution(int[] sequence) {
-        long answer1 = 0;
-        long answer2 = 0;
-        
-        answer1 = findMax(0, sequence);
-        answer2 = findMax(1, sequence);
-
-        return (answer1 > answer2) ? answer1 : answer2;
     }
 }
