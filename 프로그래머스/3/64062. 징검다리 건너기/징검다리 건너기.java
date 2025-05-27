@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Solution {
     
     boolean canJump(int mid, int[] stones, int k) {
@@ -22,8 +20,7 @@ class Solution {
         
     public int solution(int[] stones, int k) {
         int min = Integer.MAX_VALUE;
-        int max = 0;
-        int mid = 0;
+        int max = 0, mid = 0;
         
         for(int stone : stones) {
             min = Math.min(min, stone);
