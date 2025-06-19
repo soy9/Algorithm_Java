@@ -2,18 +2,11 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int N;
-    static int D;
-	static int[] dist;
-	static int[] hasRode;
-    
     static class Rode {
-        int from;
         int to;
         int dist;
         
-        public Rode (int from, int to, int dist) {
-            this.from = from;
+        public Rode (int to, int dist) {
             this.to = to;
             this.dist = dist;
         }
@@ -26,11 +19,13 @@ public class Main {
 		int D = Integer.parseInt(st.nextToken());
         
         int[] dist = new int[D + 1];
-        int[] hasRode = new int[D + 1];
-        PriorityQueue<Rode> pq = new PriorityQueue<>((o1, o2) -> o1.from - o2.from);
-     
-        for(int i = 0; i <= D; i++) {
+        for (int i = 0; i <= D; i++) {
             dist[i] = i;
+        }
+        
+        List<Rode>[] shortCuts = new ArrayList[D + 1];
+        for (int i = 0; i <= D; i++) {
+            shortCuts[i] = new ArrayList<>();
         }
         
 		for(int i = 0; i < N; i++) {
@@ -42,18 +37,15 @@ public class Main {
             if(d >= to - from || to > D) {
                 continue;
             }
-            pq.add(new Rode(from, to, d));
-            hasRode[from]++;
+            shortCuts[from].add(new Rode(to, d));
 		}
-        
+
         for(int i = 0; i <= D; i++) {
             if(i > 0) {
                 dist[i] = Math.min(dist[i], dist[i - 1] + 1);
             }
-            
-            for(int j = 0; j < hasRode[i]; j++) {
-                Rode rode = pq.poll();
-                dist[rode.to] = Math.min(dist[rode.to], dist[rode.from] + rode.dist);
+            for(Rode rode : shortCuts[i]) {
+                dist[rode.to] = Math.min(dist[rode.to], dist[i] + rode.dist);
             }
         }
         
